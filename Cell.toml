@@ -1,0 +1,4 @@
+id = "dashboard"
+command = "bun link cell-mesh-protocol-1 && bun run index.ts"
+critical = false
+scalable = false
