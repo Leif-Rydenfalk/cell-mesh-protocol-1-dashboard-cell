@@ -34,7 +34,7 @@ async function refreshLogs() {
     } catch (e) { /* ignore */ }
 }
 
-setInterval(refreshLogs, 5000);
+cell.registerInterval(setInterval(refreshLogs, 5000));
 refreshLogs();
 
 // ============================================================================
@@ -254,7 +254,7 @@ const UI_HTML = `<!DOCTYPE html>
 </body>
 </html>`;
 
-Bun.serve({
+const uiServer = Bun.serve({
     port: PORT,
     hostname: "0.0.0.0",
     async fetch(req) {
@@ -283,4 +283,5 @@ Bun.serve({
     }
 });
 
+cell.onShutdown(() => uiServer.stop());
 cell.log("INFO", "Dashboard online at http://localhost:" + PORT);
