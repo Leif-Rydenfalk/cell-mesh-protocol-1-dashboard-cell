@@ -20,9 +20,9 @@ const MAX_LOGS = 200;
 
 async function refreshLogs() {
     try {
-        const result = await cell.mesh.log.get({ limit: 50 });
-        if (result.ok && result.logs) {
-            const parsed = result.logs.map((line: string) => {
+        const result = await cell.askMesh("log/get", { limit: 50 }, {}, { maxWaitMs: 0 });
+        if (result.ok && (result.value as any)?.logs) {
+            const parsed = (result.value as any).logs.map((line: string) => {
                 const match = line.match(/\[([^\]]+)\]\s+\[([^\]]+)\]\s+(.*)/);
                 if (match) {
                     return { timestamp: Date.parse(match[1]), level: "INFO", from: match[2], msg: match[3] };
